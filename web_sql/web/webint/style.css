@@ -1,0 +1,13 @@
+a, A:link, a:visited, a:active
+       {color: blue; text-decoration: none; font-family: Tahoma, Verdana; font-size: 12px;}
+A:hover
+       {color: #ff0000; text-decoration: none; font-family: Tahoma, Verdana; font-size: 12px;}
+p, tr, td, ul, li
+       {color: #000000; font-family: Tahoma, Verdana; font-size: 12px;}
+.header1, h1
+       {color: #ffffff; background: #4682B4; font-weight: bold; font-family: Tahoma, Verdana; font-size: 13px; margin: 0px; padding: 2px;}
+.header2, h2
+       {color: #000000; background: #DBEAF5; font-weight: bold; font-family: Tahoma, Verdana; font-size: 12px;}
+th
+       {color: yellow; font-family: Tahoma, Verdana; font-size: 12px;}
+
