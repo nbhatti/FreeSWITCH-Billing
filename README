@@ -128,7 +128,9 @@ FreeSWITCH-Billing
          |      |---> fsxml
          |      |
          |      |---> webint
-         |
+         |      |
+         |      |---> cdrpost
+         |      
          |---> sql
 
 
@@ -173,7 +175,8 @@ web_sql:
 
      web_sql/web/* -          Contains the GUI frontend, copy those into the 
                                /var/www (debian/ubuntu) directory, including 
-                               subfolders, etc.
+                               subfolders, etc. Also contains "cdrpost, which 
+                               is where CDRs are posted and rated ;)
                                
      web_sql/sql/             Contains a mysqldump for the complete database used
                               by viking.
