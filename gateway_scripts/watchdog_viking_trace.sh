@@ -6,7 +6,7 @@ if [ $FSPID -gt 0 ]; then
         echo "Process is running..."
 else
         echo "We should start the process..."
-        nohup /home/david/viking_tracing_check.pl &
+        nohup /home/freeswitch/viking_tracing_check.pl &
 fi
 
 exit

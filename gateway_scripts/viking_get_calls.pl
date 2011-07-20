@@ -5,7 +5,7 @@ use warnings;
 use DBI;
 $|=1;
 
-my $dbh = DBI->connect('DBI:mysql:viking;host=192.168.168.2', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
+my $dbh = DBI->connect('DBI:mysql:viking;host=viking_db', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
 my $result;
 my $command="";
 my @data;
@@ -42,7 +42,7 @@ my $call_uuid;
 
 
 while(1){
-     open IN,"/usr/local/freeswitch/bin/fs_cli --host=192.168.168.3 --port=8021 --password=M3ll4m0d4v1d -x 'show channels' |";
+     open IN,"/usr/local/freeswitch/bin/fs_cli --host=192.168.168.3 --port=8021 --password=YOURPASSWORD -x 'show channels' |";
      $dbh->do("truncate table channels"); 
      while(<IN>){
           if($_!~/^$/ && $_!~/total.$/ && $_!~/uuid,direction,created,created/){

@@ -5,7 +5,7 @@ use warnings;
 use DBI;
 $|=1;
 
-my $dbh = DBI->connect('DBI:mysql:viking;host=192.168.168.2', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
+my $dbh = DBI->connect('DBI:mysql:viking;host=viking_db', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
 # ip.src 
 # ip.dst 
 # udp.srcport 
@@ -34,7 +34,7 @@ my $child=0;
 $sth_trace->execute();
 my $result = $sth_trace->fetchrow_hashref();
 
-system('echo "truncate table sip_trace;"|mysql -u viking -pV1k1ng -h 192.168.168.2 viking');
+system('echo "truncate table sip_trace;"|mysql -u viking -pV1k1ng -h viking_db viking');
 
 StartTrace($result->{remote_host},$result->{service_ip},"5060",$result->{dialed_number});
 

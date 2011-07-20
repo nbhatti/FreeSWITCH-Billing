@@ -31,11 +31,16 @@
      <!--        THE REST, I DON'T REALLY CARE ABOUT         -->
      <!-------------------------------------------------------->
 
-     <X-PRE-PROCESS cmd="set" data="domain=212.231.5.226"/>
-     <X-PRE-PROCESS cmd="set" data="domain_name=212.231.5.226"/>
-     <X-PRE-PROCESS cmd="set" data="external_rtp_ip=212.231.5.226"/>
-     <X-PRE-PROCESS cmd="set" data="external_sip_ip=212.231.5.226"/>
+     <X-PRE-PROCESS cmd="set" data="domain=1.2.3.4"/>
+     <X-PRE-PROCESS cmd="set" data="domain_name=1.2.3.4"/>
+     <X-PRE-PROCESS cmd="set" data="external_rtp_ip=1.2.3.4"/>
+     <X-PRE-PROCESS cmd="set" data="external_sip_ip=1.2.3.4"/>
      <X-PRE-PROCESS cmd="set" data="viking_xml_gateway=192.168.168.2:88"/>
+     <X-PRE-PROCESS cmd="set" data="viking_host_private_ip=192.168.168.3"/>
+     
+     <!-- I ONLY DO g.729, so: -->
+     <X-PRE-PROCESS cmd="set"   data="global_codec_prefs=G729"/>
+     <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=G729"/>
 
      <!-------------------------------------------------------->
      <!--             END VIKING VARIABLES HERE!             -->
@@ -138,8 +143,6 @@
        127 - BV32
 
   -->
-  <X-PRE-PROCESS cmd="set"   data="global_codec_prefs=G729"/>
-  <X-PRE-PROCESS cmd="set" data="outbound_codec_prefs=G729"/>
 
   <!--
       xmpp_client_profile and xmpp_server_profile
@@ -238,13 +241,14 @@
   -->
   <X-PRE-PROCESS cmd="set" data="sip_tls_version=tlsv1"/>
 
-  <!-- Internal SIP Profile -->
+  <!-- Internal SIP Profile 
   <X-PRE-PROCESS cmd="set" data="internal_auth_calls=true"/>
   <X-PRE-PROCESS cmd="set" data="internal_sip_port=5080"/>
-  <!-- <X-PRE-PROCESS cmd="set" data="internal_tls_port=5081"/> -->
+  <!-- <X-PRE-PROCESS cmd="set" data="internal_tls_port=5081"/> 
   <X-PRE-PROCESS cmd="set" data="internal_ssl_enable=false"/>
   <X-PRE-PROCESS cmd="set" data="internal_ssl_dir=$${base_dir}/conf/ssl"/>
-
+     -->
+     
   <!-- External SIP Profile -->
   <X-PRE-PROCESS cmd="set" data="external_auth_calls=false"/>
   <X-PRE-PROCESS cmd="set" data="external_sip_port=5060"/>

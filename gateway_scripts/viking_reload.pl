@@ -31,7 +31,7 @@ exit 0;
 
 
 sub Reload(){
-        system("/home/david/freeswitch_reload_config.pl");
+        system("/home/freeswitch/freeswitch_reload_config.pl");
 }
 
 
@@ -39,7 +39,7 @@ sub CheckSum($){
 
      my $table_in = shift;
 
-     my $dbh = DBI->connect('DBI:mysql:viking;host=192.168.168.2', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
+     my $dbh = DBI->connect('DBI:mysql:viking;host=viking_db', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
      my $sth = $dbh->prepare('checksum table ' . $table_in . ';') or die "Couldn't prepare statement: " . $dbh->errstr;
      $sth->execute();
 

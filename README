@@ -159,16 +159,28 @@ to freeswitch's /usr/local/freeswitch directory. The structure is the same.
      
 gateway-scripts:
 
+All these files should be copied to your FreeSWITCH host. Create (is not already 
+created) a freeswitch user and copy them to it's home directory.
+ 
 Contains watchdog and other scripts needed to do tracing (low level), FS config 
 reload when the database changes, etc. (I've found the hard way that you can't just
 kill and reload gateways)
 
-You need to create a cron job like the following:
+- You MUST edit these files and set the correct IP for the mySQL server. By default,
+the scripts assume you have created a host in your /etc/hosts file pointing to 
+your MySQL like this:
+
+1.2.3.4   viking_db
+
+You also need to set your cli password, by default it is "YOURPASSWORD" ;)
+By default, the CLI is on port 8021 of your FS host's private IP.
+
+- You need to create a cron job like the following:
 
 # m h  dom mon dow   command
-* * * * *       /home/david/watchdog_viking_reload.sh
-* * * * *       /home/david/watchdog_viking_trace.sh
-* * * * *       /home/david/watchdog_viking_get_calls.sh
+* * * * *       /path/to/watchdog_viking_reload.sh
+* * * * *       /path/to/watchdog_viking_trace.sh
+* * * * *       /path/to/watchdog_viking_get_calls.sh
 
 
 web_sql:
@@ -186,7 +198,7 @@ web_sql:
 ********************************************************************************
 
 - Bugs: MANY!
-- Fixes: Non, just yet :( need time (and money, hehe)
+- Fixes: None, just yet :( need time (and money, hehe)
 
 Seriously now, I will be creating a bug-tracker somewhere. If anyone wants to help,
 you're welcome!

@@ -5,7 +5,7 @@ use warnings;
 use DBI;
 $|=1;
 
-my $dbh = DBI->connect('DBI:mysql:viking;host=192.168.168.2', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
+my $dbh = DBI->connect('DBI:mysql:viking;host=viking_db', 'viking', 'V1k1ng') || die "Could not connect to database: $DBI::errstr";
 my $result;
 my $command="";
 my $data="";
@@ -21,12 +21,12 @@ while($result = $sth_trace->fetchrow_hashref()){
      while(my $gateways = $sth_gateways->fetchrow_hashref()){
           print "GATEWAY: " . $gateways->{symbol} . "  ->  api sofia profile " . $result->{service_type} . " killgw " . $gateways->{symbol} . "\n";
 
-          $command = "/usr/local/freeswitch/bin/fs_cli --host=192.168.168.3 --port=8021 --password=M3ll4m0d4v1d -x 'sofia profile " . $result->{service_type} . " killgw " . $gateways->{symbol} . "'";
+          $command = "/usr/local/freeswitch/bin/fs_cli --host=viking_host --port=8021 --password=YOURPASSWORD -x 'sofia profile " . $result->{service_type} . " killgw " . $gateways->{symbol} . "'";
           $data=`$command`;
           print "indata: $data\n";
 
           while($data =~ m/$gateways->{symbol}/){
-               $command = "/usr/local/freeswitch/bin/fs_cli --host=192.168.168.3 --port=8021 --password=M3ll4m0d4v1d -x 'sofia profile " . $result->{service_type} . " gwlist'";
+               $command = "/usr/local/freeswitch/bin/fs_cli --host=viking_host --port=8021 --password=YOURPASSWORD -x 'sofia profile " . $result->{service_type} . " gwlist'";
                $data=`$command`;
                print "indata: $data\n";
           }
@@ -34,7 +34,7 @@ while($result = $sth_trace->fetchrow_hashref()){
 
      #$data = "Please wait";
      do{
-          $command = "/usr/local/freeswitch/bin/fs_cli --host=192.168.168.3 --port=8021 --password=M3ll4m0d4v1d -x 'sofia profile " . $result->{service_type} . " restart'";
+          $command = "/usr/local/freeswitch/bin/fs_cli --host=viking_host --port=8021 --password=YOURPASSWORD -x 'sofia profile " . $result->{service_type} . " restart'";
           $data=`$command`;
           print "indata: $data\n";
           sleep 1;
