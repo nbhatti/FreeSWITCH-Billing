@@ -1,0 +1,208 @@
+July 2011
+ReadME
+Version - 0.5
+
+This is my first ReadME, so please, bear with me!
+
+********************************************************************************
+                                Table of content
+********************************************************************************
+
+- What's Viking?
+- Features
+- Prerequisites
+- Installation
+- Bugs and fixes
+- Contact information
+
+********************************************************************************
+                                   What´s Viking
+********************************************************************************
+
+Viking is a frontend to use FreeSWITCH as a VoIP Platform for wholesale aplication
+and Calling Card application (Not in git yet). It was developed by one person, so 
+if you find something you don't like, work on it and add it to the git :)
+
+It was created using only open source software, like FreeSWITCH (Obvious), MySQL, 
+php, lua and perl.
+
+Now, don't go crazy expecting a full-blown GUI, it is not, web development is not
+my cup o' tea, as you soon find out ;)
+
+
+********************************************************************************
+                                   Features
+********************************************************************************
+
+Features include all the following parameters configurable via web interface:
+
+- Profile creation based on server IP where traffic is received. You can have 
+multiple IPs, system will create multiple profiles/diaplans so it can differentiate.
+     i.e. offer to the same customer a "gold" routing on IP1 and cheap routing 
+     on IP2
+
+- Customer add/modify/delete
+   - IP source
+   - Rates for client routes based on area code
+   - Prepaid or postpaid.
+   - When customer balance is 0, no more calls are allowed.
+   - limit max channels
+   - Media by-pass
+      - When by-passed, customer and provider will exchange RTPs directly. Else, 
+      server will be in the middle.
+
+- Provider add/modify/delete
+   - Costs for provider routes based on area code
+   - Limit max channels
+
+- Routing based on areacode, gives greater granularity.
+- Routes can be assigned multiple gateways/providers which can in turn be 
+distributed based on weight. Includes overflow to next configured GW.
+- Basic financial report generation (totals) by customer/provider
+- Basic traffic ASR/ACD report (totals) by customer/provider
+- Basic user administration. (No access level, only total access)
+- CDR export to csv file.
+- A lot more, just take a look at the GUI :)
+
+********************************************************************************
+                              Prerequisites
+********************************************************************************
+
+In order to run Viking, you need the following configured and working:
+
+- FreeSWITCH
+- MySQL
+- lua and luaSQL
+- Apache2
+- PHP
+- Perl with DBI
+
+Viking was designed to work on TWO (2) servers behina a third one acting as a 
+firewall, I personally use pfsense but you can use whichever you fancy. And to 
+communicate with each other via an private network.
+
+
+  
+                       INTERNET                    
+  
+                           |
+                           |
+                   pfsense/ARPProxy
+                           |
+                           |
+       ___________________/ \__________                                            
+      /                                \
+ ____/______                    ________\__________
+/     FS    \____Private IPs___/    MySQL/Apache2  \
+\___________/                  \___________________/
+
+
+Make SURE to check "modules.conf.xml" for the modules you need with FreeSWITCH
+
+********************************************************************************
+                                 Installation
+********************************************************************************
+
+The git structure is pretty straight-forward.
+
+
+
+FreeSWITCH-Billing
+ |
+ |---> gateway (FreeSWITCH)
+ |        |
+ |        |---> conf
+ |        |      |
+ |        |      |---> autoload_configs
+ |        |      |
+ |        |      |---> dialplan
+ |        |
+ |        |---> scripts
+ |
+ |---> gateway-scripts
+ |
+ |---> web_sql
+         |
+         |---> web (Apache's www dir)
+         |      |
+         |      |---> fsxml
+         |      |
+         |      |---> webint
+         |
+         |---> sql
+
+
+
+gateway:
+
+Contains all configuration files needed to run Viking. You should copy those files
+to freeswitch's /usr/local/freeswitch directory. The structure is the same. 
+
+     gateway/conf/vars.xml - This is the usual freeswitch config file, plus a few
+                             variables used when starting up viking/freeswitch.
+                             You need to set those variables, the crucial is
+                             viking_xml_gateway. This variable points to the 
+                             private IP address of the Apache2/MySQL installation.
+                             FreeSWITCH will get gateways.php file from the fsxml 
+                             folder. i.e. http://1.2.3.4/fsxml/gateways.php
+                             
+     gateway/conf/*         FreeSWITCH config files NOT default, you should make 
+                             sure it will work on your setup.
+
+     dialplan/public.xml -   I don't think I use that anymore, but it's still there,
+                             copy it anyway.
+                             
+     gateway/scripts/*       This dir contains the lus scripts which do the actual
+                             routing.
+     
+gateway-scripts:
+
+Contains watchdog and other scripts needed to do tracing (low level), FS config 
+reload when the database changes, etc. (I've found the hard way that you can't just
+kill and reload gateways)
+
+You need to create a cron job like the following:
+
+# m h  dom mon dow   command
+* * * * *       /home/david/watchdog_viking_reload.sh
+* * * * *       /home/david/watchdog_viking_trace.sh
+* * * * *       /home/david/watchdog_viking_get_calls.sh
+
+
+web_sql:
+
+     web_sql/web/* -          Contains the GUI frontend, copy those into the 
+                               /var/www (debian/ubuntu) directory, including 
+                               subfolders, etc.
+                               
+     web_sql/sql/             Contains a mysqldump for the complete database used
+                              by viking.
+
+********************************************************************************
+                              Bugs and Fixes
+********************************************************************************
+
+- Bugs: MANY!
+- Fixes: Non, just yet :( need time (and money, hehe)
+
+Seriously now, I will be creating a bug-tracker somewhere. If anyone wants to help,
+you're welcome!
+
+Also, for now it is all in spanish, as I did this in the beginning for a customer,
+I need to start translating it :( NOT looking forward to that!
+
+********************************************************************************
+                              Contact Information
+********************************************************************************
+
+Name: David Villasmil
+email: david.villasmil.work@gmail.com
+Phone: +34669448337 (GMT+1)
+
+
+
+Thanks to all!
+
+
+David
+ 
